@@ -17,6 +17,7 @@ import {
   isAggregate,
   isBin,
   isCalculate,
+  isCorrelation,
   isDensity,
   isExtent,
   isFilter,
@@ -42,6 +43,7 @@ import {materializeSelections} from '../selection/parse.js';
 import {AggregateNode} from './aggregate.js';
 import {BinNode} from './bin.js';
 import {CalculateNode} from './calculate.js';
+import {CorrelationTransformNode} from './correlation.js';
 import {DataFlowNode, OutputNode} from './dataflow.js';
 import {DensityTransformNode} from './density.js';
 import {ExtentTransformNode} from './extent.js';
@@ -230,6 +232,9 @@ export function parseTransformArray(head: DataFlowNode, model: Model, ancestorPa
       derivedType = 'derived';
     } else if (isRegression(t)) {
       transformNode = head = new RegressionTransformNode(head, t);
+      derivedType = 'derived';
+    } else if (isCorrelation(t)) {
+      transformNode = head = new CorrelationTransformNode(head, t);
       derivedType = 'derived';
     } else if (isLoess(t)) {
       transformNode = head = new LoessTransformNode(head, t);
