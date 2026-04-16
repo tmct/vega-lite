@@ -4,6 +4,7 @@ import {VgData} from '../../vega.schema.js';
 import {AggregateNode} from './aggregate.js';
 import {BinNode} from './bin.js';
 import {CalculateNode} from './calculate.js';
+import {CorrelationTransformNode} from './correlation.js';
 import {DataFlowNode, OutputNode} from './dataflow.js';
 import {DensityTransformNode} from './density.js';
 import {ExtentTransformNode} from './extent.js';
@@ -105,6 +106,7 @@ function makeWalkTree(data: VgData[]) {
       node instanceof LoessTransformNode ||
       node instanceof QuantileTransformNode ||
       node instanceof RegressionTransformNode ||
+      node instanceof CorrelationTransformNode ||
       node instanceof IdentifierNode ||
       node instanceof SampleTransformNode ||
       node instanceof PivotTransformNode ||

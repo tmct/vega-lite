@@ -44,6 +44,24 @@ describe('compile/data/fold', () => {
       });
     });
 
+    it('should pass weight through to the vg transform', () => {
+      const transform: Transform = {
+        regression: 'y',
+        on: 'x',
+        weight: 'w',
+        method: 'linear',
+      };
+      const regression = new RegressionTransformNode(null, transform);
+      expect(regression.assemble()).toEqual({
+        type: 'regression',
+        x: 'x',
+        y: 'y',
+        weight: 'w',
+        method: 'linear',
+        as: ['x', 'y'],
+      });
+    });
+
     it('should handle partial "as" field', () => {
       const transform: Transform = {
         regression: 'y',
