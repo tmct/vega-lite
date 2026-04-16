@@ -28,6 +28,7 @@ The View-level `transform` object is an array of objects describing transformati
 - [Aggregate](aggregate.html#transform)
 - [Bin](bin.html#transform)
 - [Calculate](calculate.html)
+- [Correlation](correlation.html)
 - [Density](density.html)
 - [Extent](extent.html)
 - [Filter](filter.html)
