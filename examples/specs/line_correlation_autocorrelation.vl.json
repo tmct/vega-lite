@@ -1,0 +1,52 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+  "description": "Autocorrelation of Seattle daily max temperature at lags of 1, 3, and 6 days, broken out by month. Shows how day-to-day temperature persistence decays with lag.",
+  "data": {"url": "data/seattle-weather.csv"},
+  "transform": [
+    {
+      "window": [
+        {"op": "lag", "field": "temp_max", "param": 1, "as": "temp_lag_1d"},
+        {"op": "lag", "field": "temp_max", "param": 3, "as": "temp_lag_3d"},
+        {"op": "lag", "field": "temp_max", "param": 6, "as": "temp_lag_6d"}
+      ],
+      "sort": [{"field": "date"}]
+    },
+    {"filter": "datum.temp_lag_1d != null && datum.temp_lag_3d != null && datum.temp_lag_6d != null"},
+    {"calculate": "month(datum.date) + 1", "as": "month"},
+    {"fold": ["temp_lag_1d", "temp_lag_3d", "temp_lag_6d"], "as": ["lag", "temp_lagged"]},
+    {
+      "correlation": "temp_max",
+      "on": "temp_lagged",
+      "groupby": ["month", "lag"],
+      "as": ["corr"]
+    }
+  ],
+  "width": 480,
+  "height": 280,
+  "mark": {"type": "line", "point": true},
+  "encoding": {
+    "x": {
+      "field": "month",
+      "type": "ordinal",
+      "title": "Month",
+      "axis": {
+        "labelExpr": "['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][datum.value - 1]"
+      }
+    },
+    "y": {
+      "field": "corr",
+      "type": "quantitative",
+      "title": "Autocorrelation of temp_max",
+      "scale": {"domain": [0, 1]}
+    },
+    "color": {
+      "field": "lag",
+      "type": "nominal",
+      "title": "Lag",
+      "sort": ["temp_lag_1d", "temp_lag_3d", "temp_lag_6d"],
+      "legend": {
+        "labelExpr": "{'temp_lag_1d':'1 day','temp_lag_3d':'3 days','temp_lag_6d':'6 days'}[datum.value]"
+      }
+    }
+  }
+}

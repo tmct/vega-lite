@@ -44,3 +44,9 @@ If the `groupby` parameter is provided, one coefficient is computed per group, a
 ```
 
 Add an optional `"weight"` field to compute a weighted Pearson correlation. Rows with negative weights are ignored with a warning. Groups with zero total weight or zero variance in either field emit a `null` coefficient.
+
+## Example
+
+Autocorrelation of daily maximum temperature in Seattle at lags of 1, 3, and 6 days, broken out by month — showing how day-to-day temperature persistence decays with lag:
+
+<div class="vl-example" data-name="line_correlation_autocorrelation"></div>
