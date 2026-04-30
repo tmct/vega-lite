@@ -522,6 +522,10 @@
         "title": "Loess Regression"
       },
       {
+        "name": "line_correlation_autocorrelation",
+        "title": "Autocorrelation Decay by Month"
+      },
+      {
         "name": "window_impute_null",
         "title": "Using window transform to impute missing values by averaging the previous and next values."
       },
